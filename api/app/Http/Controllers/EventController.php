@@ -2,29 +2,71 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\{Request, Response};
 use App\Models\Event;
+use App\Services\Event\EventService;
+use Illuminate\Http\{Request, Response};
 
 class EventController extends Controller
 {
-    public function saveEvent(Request $request): Response
+    protected $eventService;
+
+    public function __construct(EventService $eventService)
     {
-        $event = Event::create([
-            'title' => $request->title,
-            'from' => date('Y-m-d', $request->from),
-            'to' => date('Y-m-d', $request->to),
-            'days' => $request->days
-        ]);
-        return response([
-            'event' => $event
-        ]);
+        $this->eventService = $eventService;
     }
 
-    public function getAllEvents(Request $request): Response
+    /**
+     * List all events
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function index(Request $request): Response
     {
-        $events = Event::get();
-        return response([
-            'events' => $events
-        ]);
+        return $this->eventService->index($request);
+    }
+
+    /**
+     * Show an event
+     *
+     * @param Event $event
+     * @param Request $request
+     * @return Response
+     */
+    public function show(Event $event, Request $request): Response
+    {
+        return $this->eventService->show($event, $request);
+    }
+
+    /**
+     * Store a new event
+     */
+    public function store(Request $request): Response
+    {
+        return $this->eventService->store($request);
+    }
+
+    /**
+     * Update an event
+     *
+     * @param Event $event
+     * @param Request $request
+     * @return Response
+     */
+    public function update(Event $event, Request $request): Response
+    {
+        return $this->eventService->update($event, $request);
+    }
+
+    /**
+     * Delete an event
+     *
+     * @param Event $event
+     * @param Request $request
+     * @return Response
+     */
+    public function destroy(Event $event, Request $request): Response
+    {
+        return $this->eventService->destroy($event, $request);
     }
 }

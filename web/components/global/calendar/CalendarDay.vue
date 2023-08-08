@@ -1,18 +1,21 @@
 <template>
-  <div :class="[
-    attr['date'],
-    date.month() !== current_month && attr['date--inactive']
-  ]">
+  <div
+    :class="[
+      attr['date'],
+      date.month() !== current_month && attr['date--inactive']
+    ]"
+    @click="openModal"
+  >
     <span :class="attr['date__the-date']">{{ date.date() }}</span>
-    <!-- <pre>{{ dayHasEvent }}</pre> -->
     <div v-if="dayHasEvent" :class="attr['date__events-wrap']">
       <div
         v-for="(event, idx) in eventsInDay"
         :key="idx"
         :style="{ '--bg_color': event.color }"
         :class="attr['date__event']"
-      >&nbsp;</div>
+      >{{ event.title }}</div>
     </div>
+
   </div>
 </template>
 
@@ -47,10 +50,14 @@
       },
       eventsInDay() {
         return this.events.filter(event => {
-          // check if day in selected
-          console.log(event.days.map((_, i) => i ), this.date.day())
-          if (!event.days.map((_, i) => i ).includes(this.date.day())) {
-            return []
+          const checked_days = event.days.reduce((acc, day, idx) => {
+            return day.checked ? [ ...acc, idx ] : acc
+          }, [])
+
+          console.log(checked_days)
+
+          if (checked_days.includes(this.date.day())) {
+            return false
           }
           return this.date.isBetween(
             this.$moment(event.from),
@@ -59,6 +66,12 @@
         })
       }
     },
+    methods: {
+      openModal() {
+        if (!this.eventsInDay.length) return
+        this.$nuxt.$emit('open-event-modal', this.eventsInDay)
+      }
+    }
   }
 </script>
 
@@ -75,8 +88,9 @@
     &__events-wrap
       & ^[0]__event
         margin: 5px
-        height: 8px
-        aspect-ratio: 1
-        border-radius: 50%
+        padding: 5px 10px
+        border-radius: 5px
         background-color: var(--bg_color)
+        font-size: 10px
+        font-weight: normal
 </style>

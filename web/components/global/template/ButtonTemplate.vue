@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
   <nuxt-link
     :to="link"
     custom
@@ -128,7 +128,7 @@
     font-weight: var(--med)
     font-family: var(--merri_sans)
     text-align: center
-    border-radius: 50px
+    border-radius: 10px
     transition: .4s ease-in-out
     span
       position: inherit
@@ -184,27 +184,27 @@
       bottom: 0
       width: 0
       background-color: transparent
-      border-radius: 50px
+      border-radius: 10px
       opacity: 0
       visibility: hidden
       transition: .4s ease-in-out
     &:hover
       & ^[0]__icon,
       & ^[0]__search-icon
-        stroke: var(--theme_primary)
+        stroke: var(--theme_black)
       &::before
         width: 100%
         opacity: 1
         visibility: visible
     &--primary,
     &--primary-long
-      border: 1px solid var(--theme_primary)
-      background-color: var(--theme_primary)
+      border: 1px solid var(--theme_black)
+      background-color: var(--theme_black)
       &:hover
         &::before
           background-color: var(--theme_white)
         span
-          color: var(--theme_primary)
+          color: var(--theme_black)
     &--primary-long
       padding: 16px 60px
     &--tertiary
@@ -223,9 +223,9 @@
       span
         color: var(--theme_black)
       &:hover
-        border: 1px solid var(--theme_primary)
+        border: 1px solid var(--theme_black)
         &::before
-          background-color: var(--theme_primary)
+          background-color: var(--theme_black)
         span
           color: var(--theme_white)
     &--outline-white

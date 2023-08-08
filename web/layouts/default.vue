@@ -114,7 +114,7 @@
     },
     head () {
       return {
-        title: 'Propan | Welcome'
+        title: 'AAS Exam Calendar'
       }
     }
   }

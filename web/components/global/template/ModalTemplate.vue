@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
   <div
     :class="[
       attr['modal'],
@@ -160,7 +160,7 @@
       margin-bottom: 40px
       letter-spacing: 0.4px
       color: #585858
-  /** 
+  /**
   * Animations */
   @keyframes fade_in
     0%

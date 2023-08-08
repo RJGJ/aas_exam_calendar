@@ -6,15 +6,14 @@
         :key="idx"
         :class="attr['days__item']"
       >
-        <label :for="day.name">{{ day.name }}</label>
         <input
           type="checkbox"
           :name="day.name"
           :id="day.name"
           v-model="day.checked"
         />
+        <label :for="day.name">{{ day.name }}</label>
       </div>
-      <!-- <pre>{{ dates }}</pre> -->
     </div>
   </div>
 </template>
@@ -34,7 +33,8 @@
     },
     computed: {
       availableDays() {
-        return this.dates.filter(date => !date.disabled)
+        // return this.dates.filter(date => !date.disabled)
+        return this.dates
       }
     },
     watch: {
@@ -61,10 +61,12 @@
   .days
     &__list
       display: flex
-      flex-wrap: wrap
+      flex-flow: column
       & ^[0]__item
-        &:not(&:last-child)
+        input
           margin-right: 10px
+        &:not(&:last-child)
+          margin-bottom: 10px
     input
       -webkit-appearance: auto
 

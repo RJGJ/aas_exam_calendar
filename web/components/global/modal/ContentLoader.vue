@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
   <div :class="attr['loader']">
     <div :class="attr['loader__wrapper']">
       <div :class="attr['loader__dots']"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>

@@ -14,12 +14,14 @@ class CreateEventsTable extends Migration
     public function up()
     {
         Schema::create('events', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('title');
+            $table->string('color');
             $table->date('from');
             $table->date('to');
-            $table->set('days', ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']);
+            $table->json('days');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
