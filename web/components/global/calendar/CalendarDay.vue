@@ -12,8 +12,8 @@
         v-for="(event, idx) in eventsInDay"
         :key="idx"
         :style="{ '--bg_color': event.color }"
-        :class="!getMobile ? attr['date__event'] : attr['date__dot']"
-      >{{ !getMobile ? event.title : '' }}</div>
+        :class="!getMobile && date.month() === current_month ? attr['date__event'] : attr['date__dot']"
+      >{{ !getMobile && date.month() === current_month ? event.title : '' }}</div>
     </div>
 
   </div>
@@ -84,15 +84,21 @@
     &:hover
       background-color: #eee
     &__events-wrap
-      & ^[0]__event
+      display: flex
+      flex-flow: row wrap
+
+      & ^[0]__event,
+      & ^[0]__dot
         margin: 5px
+        background-color: var(--bg_color)
+
+      & ^[0]__event
+        flex: 0 0 calc(100% - 10px)
         padding: 5px 10px
         border-radius: 5px
-        background-color: var(--bg_color)
         font-size: 10px
         font-weight: normal
       & ^[0]__dot
-        background-color: var(--bg_color)
         height: 10px
         width: 10px
         border-radius: 50%

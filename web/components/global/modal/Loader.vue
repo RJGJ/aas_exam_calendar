@@ -7,7 +7,8 @@
   >
     <div :class="attr['loader__wrapper']">
       <template v-if="!getItem.indicator">
-        <figure>
+        <div :class="attr['loader__dots']"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+        <!-- <figure>
           <nuxt-img
             format="gif"
             preload
@@ -15,17 +16,17 @@
             height="400"
             src="/loader.gif"
           />
-        </figure>
+        </figure> -->
       </template>
       <template v-else>
         <div :class="attr['loader__dots']"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
       </template>
-      <template v-if="getItem && !getItem.indicator">
+      <!-- <template v-if="getItem && !getItem.indicator">
         <div :class="attr['loader__progress']">
           <div :class="attr['loader__overlay']" :style="`width: ${(getItem.start) ? progress : 100}%;`"></div>
           <span>{{ (getItem.start) ? progress : 100 }}</span>
         </div>
-      </template>
+      </template> -->
     </div>
   </div>
 </template>
@@ -68,7 +69,8 @@
     bottom: 0
     right: 0
     z-index: 9901
-    background-color: #A83217
+    // background-color: #A83217
+    background-color: rgba(255, 255, 255, 0.5)
     &--indicator
       background-color: #A8321740
     &__wrapper
@@ -125,7 +127,7 @@
           width: 7px
           height: 7px
           border-radius: 50%
-          background-color: var(--theme_primary)
+          background-color: var(--theme_black)
           margin: -4px 0 0 -4px
         &:nth-child(1)
           animation-delay: -0.036s
