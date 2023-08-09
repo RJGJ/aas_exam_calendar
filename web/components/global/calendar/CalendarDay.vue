@@ -12,8 +12,8 @@
         v-for="(event, idx) in eventsInDay"
         :key="idx"
         :style="{ '--bg_color': event.color }"
-        :class="attr['date__event']"
-      >{{ event.title }}</div>
+        :class="!getMobile ? attr['date__event'] : attr['date__dot']"
+      >{{ !getMobile ? event.title : '' }}</div>
     </div>
 
   </div>
@@ -54,9 +54,7 @@
             return day.checked ? [ ...acc, idx ] : acc
           }, [])
 
-          console.log(checked_days)
-
-          if (checked_days.includes(this.date.day())) {
+          if (!checked_days.includes(this.date.day())) {
             return false
           }
           return this.date.isBetween(
@@ -93,4 +91,9 @@
         background-color: var(--bg_color)
         font-size: 10px
         font-weight: normal
+      & ^[0]__dot
+        background-color: var(--bg_color)
+        height: 10px
+        width: 10px
+        border-radius: 50%
 </style>

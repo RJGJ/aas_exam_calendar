@@ -5,7 +5,9 @@
     </div>
     <div :class="attr['calendar__inner']">
       <div :class="attr['calendar__days']">
-        <div :class="attr['calendar__day']" v-for="(day, key) in days" :key="key">{{ day }}</div>
+        <div :class="attr['calendar__day']" v-for="i in 7" :key="i">
+          {{ $moment().day(i).format(getMobile ? 'dd' : 'dddd') }}
+        </div>
       </div>
       <div :class="attr['calendar__rows']">
         <CalendarRow
@@ -76,9 +78,11 @@
       & ^[0]__days
         display: flex
         & ^[0]__day
-          flex-grow: 1
-          flex-basis: calc(100% / 7)
+          padding: 10px 0
+          flex: 0 0 calc(100% / 7)
           text-align: center
+          // flex-grow: 1
+          // flex-basis: calc(100% / 7)
       & ^[0]__rows
         border-top: solid 1px black
         border-left: solid 1px black

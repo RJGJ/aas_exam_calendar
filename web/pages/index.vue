@@ -250,12 +250,27 @@ import { ValidationProvider } from 'vee-validate'
 
         if (this.form_data.id) {
           const response = await this.$axios.$post('/web/events/' + this.form_data.id, { ...to_submit, _method: 'PATCH' })
-          this.calendar_payload.events = this.calendar_payload.events.map(item => {
-            if (item.id === response.record.id) {
-              return response.record
-            }
-            return item
-          })
+          this.calendar_payload.events = this.calendar_payload.events
+            .map(item => {
+              if (item.id === response.record.id) {
+                return {
+                  ...response.record,
+                  days: [
+                    { name: 'Sunday', checked: false, disabled: false },
+                    { name: 'Monday', checked: false, disabled: false },
+                    { name: 'Tuesday', checked: false, disabled: false },
+                    { name: 'Wednesday', checked: false, disabled: true },
+                    { name: 'Thursday', checked: false, disabled: false },
+                    { name: 'Friday', checked: false, disabled: false },
+                    { name: 'Saturday', checked: false, disabled: false },
+                  ].map((day, idx) => ({
+                    ...day,
+                    checked: response.record.days.includes(idx)
+                  }))
+                }
+              }
+              return item
+            })
         } else {
           to_submit.color = this.randomColor()
           const response = await this.$axios.$post('/web/events', to_submit)
@@ -264,16 +279,16 @@ import { ValidationProvider } from 'vee-validate'
             .push({
               ...response.record,
               days: [
+                { name: 'Sunday', checked: false, disabled: false },
                 { name: 'Monday', checked: false, disabled: false },
                 { name: 'Tuesday', checked: false, disabled: false },
                 { name: 'Wednesday', checked: false, disabled: true },
                 { name: 'Thursday', checked: false, disabled: false },
                 { name: 'Friday', checked: false, disabled: false },
                 { name: 'Saturday', checked: false, disabled: false },
-                { name: 'Sunday', checked: false, disabled: false },
               ].map((day, idx) => ({
                 ...day,
-                checked: !response.record.days.includes(idx)
+                checked: response.record.days.includes(idx)
               }))
             })
         }
@@ -284,13 +299,13 @@ import { ValidationProvider } from 'vee-validate'
           from: '',
           to: '',
           days: [
+            { name: 'Sunday', checked: false, disabled: false },
             { name: 'Monday', checked: false, disabled: false },
             { name: 'Tuesday', checked: false, disabled: false },
             { name: 'Wednesday', checked: false, disabled: true },
             { name: 'Thursday', checked: false, disabled: false },
             { name: 'Friday', checked: false, disabled: false },
             { name: 'Saturday', checked: false, disabled: false },
-            { name: 'Sunday', checked: false, disabled: false },
           ]
         }
 
@@ -354,16 +369,16 @@ import { ValidationProvider } from 'vee-validate'
       const events = events_response.records.map(item => ({
           ...item,
           days: [
+            { name: 'Sunday', checked: false, disabled: false },
             { name: 'Monday', checked: false, disabled: false },
             { name: 'Tuesday', checked: false, disabled: false },
             { name: 'Wednesday', checked: false, disabled: true },
             { name: 'Thursday', checked: false, disabled: false },
             { name: 'Friday', checked: false, disabled: false },
             { name: 'Saturday', checked: false, disabled: false },
-            { name: 'Sunday', checked: false, disabled: false },
           ].map((day, idx) => ({
             ...day,
-            checked: !item.days.includes(idx)
+            checked: item.days.includes(idx)
           }))
         }))
 
